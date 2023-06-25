@@ -21,12 +21,12 @@ export const cp = (params) => {
     const writeStream = createWriteStream(pathToNewDirecory);
 
     readStream.on('error', (err) => {
-      console.error('Enter the correct path', err);
+      console.error('Enter the correct path');
 
     });
 
     writeStream.on('error', (err) => {
-      console.error('Enter the correct path', err);
+      console.error('Enter the correct path');
 
     });
 
