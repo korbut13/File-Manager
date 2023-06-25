@@ -3,9 +3,10 @@ import { ls } from "../commands/navigation/ls.js";
 import { rn } from "../commands/fs/rn.js";
 import { add } from "../commands/fs/add.js";
 import { cat } from "../commands/fs/cat.js";
+import { cp } from "../commands/fs/cp.js";
 
 export const commandProcessing = async (command, params) => {
-  const commands = { cd, ls, rn, add, cat };
+  const commands = { cd, ls, rn, add, cat, cp };
 
   if (commands[command]) {
 
