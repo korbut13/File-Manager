@@ -4,7 +4,7 @@ export const processingOfInputData = (data) => {
 
   const dataToArray = data.toString().trim().split(' ');
   const command = dataToArray.shift();
-  const params = dataToArray.length ? dataToArray[0].replace(/\s+/g, "") : ''
-
+  // const params = dataToArray.length ? dataToArray[0].replace(/\s+/g, "") : '';
+  const params = dataToArray.length ? dataToArray.join(' ') : '';
   commandProcessing(command, params);
 }
