@@ -1,6 +1,6 @@
 import { argv } from 'node:process';
 
-const greeting = () => {
+export const greeting = () => {
   let userName;
 
   argv.forEach((arg) => {
@@ -9,5 +9,3 @@ const greeting = () => {
 
   console.log(`Welcome to the File Manager, ${userName}!`);
 }
-
-greeting()

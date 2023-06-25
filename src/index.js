@@ -1,36 +1,20 @@
-import { stdin, argv } from 'node:process';
-import { dirname } from 'node:path';
+import { stdin, stdout, argv, chdir, cwd } from 'node:process';
+import readline from 'readline';
+//import { dirname, resolve, join } from 'node:path';
 import { homedir } from 'node:os';
 
-const start = () => {
-  let userName;
-  let currentCatalog = homedir();
+import { greeting } from './utils/greeting.js';
+import { processingOfInputData } from './utils/processingOfInputData.js';
 
-  argv.forEach((arg) => {
-    userName = arg.includes('username') ? arg.split('=')[1] : 'Svetlana'
-  });
 
-  console.log(`Welcome to the File Manager, ${userName}!`);
-  console.log(`You are currently in ${currentCatalog}`);
+greeting();
+console.log(`You are currently in ${homedir()}`);
 
-  stdin.setEncoding('utf8');
+const rl = readline.createInterface({
+  input: stdin,
+  output: stdout
+});
 
-  stdin.on('data', (data) => {
-
-    switch (data.trim()) {
-      case 'up':
-        console.log("Hello");
-        currentCatalog = dirname(currentCatalog);
-        break;
-      case 'ls':
-        console.log("Buy");
-        break;
-      default:
-        console.log("я не знаю")
-    }
-
-    console.log(`You are currently in ${currentCatalog}`)
-  })
-}
-
-start();
+rl.on('line', (inputData) => {
+  processingOfInputData(inputData);
+});
