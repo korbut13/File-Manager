@@ -17,6 +17,7 @@ export const ls = () => {
     filesInCatalog.forEach(file => contentTable.push({ Name: file.name, Type: 'file' }));
 
 
-    console.table(contentTable)
+    console.table(contentTable);
+    console.log(`You are currently in ${cwd()}`);
   })
 }

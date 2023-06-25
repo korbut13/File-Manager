@@ -23,7 +23,7 @@ export const rn = (inputData) => {
         console.error('Such a file already exists');
       }
     })
-    return `You are currently in ${cwd()}`
+    return console.log(`You are currently in ${cwd()}`)
   } catch (err) {
     console.error('Enter the correct data');
   }

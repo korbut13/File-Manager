@@ -12,5 +12,5 @@ export const cd = (path) => {
   } else {
     chdir(join(cwd(), normalize(path)));
   }
-  return `You are currently in ${cwd()}`
+  return console.log(`You are currently in ${cwd()}`)
 }

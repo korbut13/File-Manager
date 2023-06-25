@@ -1,12 +1,14 @@
 import { cd } from "../commands/navigation/cd.js";
 import { ls } from "../commands/navigation/ls.js";
-import { rename } from "../commands/fs/rename.js";
+import { rn } from "../commands/fs/rn.js";
+import { add } from "../commands/fs/add.js";
+import { cat } from "../commands/fs/cat.js";
 
-export const commandProcessing = (command, params) => {
-  const commands = { cd, ls, rename };
+export const commandProcessing = async (command, params) => {
+  const commands = { cd, ls, rn, add, cat };
 
   if (commands[command]) {
 
-    console.log(commands[command](params))
+    await commands[command](params);
   }
 }
