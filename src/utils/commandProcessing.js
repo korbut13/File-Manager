@@ -7,9 +7,10 @@ import { cp } from "../commands/fs/cp.js";
 import { mv } from "../commands/fs/mv.js";
 import { rm } from "../commands/fs/rm.js";
 import { os } from "../commands/os/os.js";
+import { hash } from "../commands/hash/hash.js";
 
 export const commandProcessing = async (command, params) => {
-  const commands = { cd, ls, rn, add, cat, cp, mv, rm, os };
+  const commands = { cd, ls, rn, add, cat, cp, mv, rm, os, hash };
 
   if (commands[command]) {
 
