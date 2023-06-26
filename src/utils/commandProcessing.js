@@ -1,3 +1,4 @@
+import { up } from "../commands/navigation/up.js";
 import { cd } from "../commands/navigation/cd.js";
 import { ls } from "../commands/navigation/ls.js";
 import { rn } from "../commands/fs/rn.js";
@@ -13,7 +14,7 @@ import { decompress } from "../commands/zip/decompress.js";
 import { ERRORS } from "./constants.js";
 
 export const commandProcessing = async (command, params) => {
-  const commands = { cd, ls, rn, add, cat, cp, mv, rm, os, hash, compress, decompress };
+  const commands = { up, cd, ls, rn, add, cat, cp, mv, rm, os, hash, compress, decompress };
 
   if (commands[command]) {
     await commands[command](params);

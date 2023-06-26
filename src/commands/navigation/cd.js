@@ -1,16 +1,17 @@
-import { isAbsolute, normalize, resolve, join } from 'node:path';
 import { chdir, cwd } from 'node:process';
 import { homedir } from 'node:os';
 
+import { normalizePath } from '../../utils/normalizePath.js';
+import { ERRORS } from '../../utils/constants.js';
 
 chdir(homedir());
 
 export const cd = (path) => {
+  try {
+    chdir(normalizePath(path));
+    return console.log(`You are currently in ${cwd()}`)
 
-  if (isAbsolute(path)) {
-    chdir(normalize(path));
-  } else {
-    chdir(join(cwd(), normalize(path)));
+  } catch (err) {
+    console.error(ERRORS.INVALID_INPUT)
   }
-  return console.log(`You are currently in ${cwd()}`)
 }
