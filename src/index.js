@@ -1,9 +1,8 @@
-import { stdin, stdout, argv, chdir, cwd } from 'node:process';
+import { stdin, stdout } from 'node:process';
 import readline from 'readline';
-//import { dirname, resolve, join } from 'node:path';
 import { homedir } from 'node:os';
 
-import { greeting } from './utils/greeting.js';
+import { greeting, goodBye } from './utils/greetingOrGoodbye.js';
 import { processingOfInputData } from './utils/processingOfInputData.js';
 
 
@@ -16,5 +15,15 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (inputData) => {
-  processingOfInputData(inputData);
+  if (inputData === '.exit') {
+    goodBye();
+    rl.close();
+  } else {
+    processingOfInputData(inputData);
+  }
+});
+
+rl.on('SIGINT', () => {
+  goodBye();
+  rl.close();
 });
