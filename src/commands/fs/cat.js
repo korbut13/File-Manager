@@ -1,23 +1,19 @@
 import { createReadStream } from 'node:fs';
-import { chdir, cwd } from 'node:process';
-import { dirname, join, isAbsolute } from 'node:path';
+import { cwd } from 'node:process';
 
+import { normalizePath } from '../../utils/normalizePath.js';
+import { ERRORS } from '../../utils/constants.js';
 
 export const cat = (params) => {
   try {
-    const path = params.split(' ')[0];
+    const path = normalizePath(params.split(' ')[0]);
 
-    if (isAbsolute(path)) {
-      chdir(dirname(path));
-    } else {
-      chdir(join(cwd(), dirname(path)));
-    }
-
-    const stream = createReadStream(path, 'utf-8');
-    stream.on('data', chunk => console.log(chunk));
-    stream.on('end', () => console.log(`You are currently in ${cwd()}`));
+    const readStream = createReadStream(path, 'utf-8');
+    readStream.on('data', chunk => console.log(chunk));
+    readStream.on('error', (err) => console.error(ERRORS.OPERATION_FAILED));
+    readStream.on('end', () => console.log(`You are currently in ${cwd()}`));
 
   } catch (err) {
-    console.error('Enter the correct path to the file');
+    console.error(ERRORS.INVALID_INPUT);
   }
 }

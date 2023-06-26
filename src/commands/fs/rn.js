@@ -1,30 +1,28 @@
 import { access, rename } from 'node:fs';
-import { dirname, join, isAbsolute } from 'node:path';
-import { chdir, cwd } from 'node:process';
+import { dirname, join } from 'node:path';
+import { cwd } from 'node:process';
 
-export const rn = (inputData) => {
+import { normalizePath } from '../../utils/normalizePath.js';
+import { ERRORS } from '../../utils/constants.js';
+
+export const rn = (params) => {
   try {
-    const path = inputData.split(' ')[0];
-    const newName = inputData.split(' ')[1];
+    const path = normalizePath(params.split(' ')[0]);
+    const newName = params.split(' ')[1];
     const newPath = join(dirname(path), newName);
-
-    if (isAbsolute(path)) {
-      chdir(dirname(path));
-    } else {
-      chdir(join(cwd(), dirname(path)));
-    }
 
     access(newPath, (err) => {
       if (err) {
-        rename(path, newName, (err) => {
-          if (err) console.error('Failed to rename file', err);
+        rename(path, newPath, (err) => {
+          if (err) console.error(ERRORS.OPERATION_FAILED);
         });
       } else {
-        console.error('Such a file already exists');
+        console.error('Such a file already exists', `\n${ERRORS.OPERATION_FAILED}`);
       }
     })
-    return console.log(`You are currently in ${cwd()}`)
+    return console.log(`You are currently in ${cwd()}`);
+
   } catch (err) {
-    console.error('Enter the correct data');
+    console.error(ERRORS.INVALID_INPUT);
   }
 }

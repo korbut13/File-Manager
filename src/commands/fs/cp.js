@@ -1,16 +1,15 @@
 import { createReadStream, createWriteStream } from 'node:fs';
-import { dirname, join, isAbsolute, basename } from 'node:path';
-import { chdir, cwd } from 'node:process';
+import { join, basename } from 'node:path';
+import { cwd } from 'node:process';
+
+import { normalizePath } from '../../utils/normalizePath.js';
+import { ERRORS } from '../../utils/constants.js';
 
 export const cp = (params) => {
 
   try {
-    let path = params.split(' ')[0];
-    const pathToNewDirecory = join(params.split(' ')[1], basename(path));
-
-    if (!isAbsolute(path)) {
-      path = (join(cwd(), path));
-    }
+    const path = normalizePath(params.split(' ')[0]);
+    const pathToNewDirecory = normalizePath(join(params.split(' ')[1], basename(path)));
 
     if (path === pathToNewDirecory) {
       console.log('Such a file already exists in the specified directory')
@@ -21,13 +20,11 @@ export const cp = (params) => {
     const writeStream = createWriteStream(pathToNewDirecory);
 
     readStream.on('error', (err) => {
-      console.error('Enter the correct path');
-
+      console.error(ERRORS.OPERATION_FAILED);
     });
 
     writeStream.on('error', (err) => {
-      console.error('Enter the correct path');
-
+      console.error(ERRORS.OPERATION_FAILED);
     });
 
     writeStream.on('finish', () => {
@@ -37,6 +34,6 @@ export const cp = (params) => {
     readStream.pipe(writeStream);
 
   } catch (err) {
-    console.error('Enter the correct path');
+    console.error(ERRORS.INVALID_INPUT);
   }
 }

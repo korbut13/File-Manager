@@ -8,12 +8,16 @@ import { mv } from "../commands/fs/mv.js";
 import { rm } from "../commands/fs/rm.js";
 import { os } from "../commands/os/os.js";
 import { hash } from "../commands/hash/hash.js";
+import { compress } from "../commands/zip/zip.js";
+import { ERRORS } from "./constants.js";
 
 export const commandProcessing = async (command, params) => {
-  const commands = { cd, ls, rn, add, cat, cp, mv, rm, os, hash };
+  const commands = { cd, ls, rn, add, cat, cp, mv, rm, os, hash, compress };
 
   if (commands[command]) {
-
     await commands[command](params);
+
+  } else {
+    console.error(ERRORS.INVALID_INPUT);
   }
 }
